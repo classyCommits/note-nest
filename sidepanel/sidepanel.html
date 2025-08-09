@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickNotes</title>
+    <link rel="stylesheet" href="sidepanel.css">
+    <script src="../assets/lib/gsap.min.js"></script> 
+</head>
+
+<body class="h-full">
+    <div id="app" class="h-full flex flex-col panel-enter">
+        <!-- Header -->
+        <header class="flex items-center justify-between p-4 border-b border-color">
+               <button id="toggleSidebarBtn" 
+                       aria-label="Toggle Sidebar"
+                       class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700">
+                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                         d="M4 6h16M4 12h16M4 18h16" />
+                 </svg>
+                </button>
+            <div class="flex items-center space-x-2">
+                <svg class="w-6 h-6 icon-primary" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 001 1h6a1 1 0 001-1V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                </svg>
+                <h1 class="text-lg font-semibold">QuickNotes</h1>
+            </div>            
+        </header>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex overflow-hidden">
+            <!-- Sidebar -->
+            <div id="sidebar" class="border-r p-3 overflow-y-auto border-color">
+                <!-- Search -->
+                <div class="mb-4">
+                    <input type="text" id="searchInput" placeholder="Search notes..." 
+                           class="search-input w-full px-3 py-2 text-sm rounded-lg focus:outline-none">
+                </div>
+
+                <!-- New Note Button -->
+                <button id="newNoteBtn" class="btn-primary w-full py-2 px-4 rounded-lg text-sm font-medium mb-4 flex items-center justify-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    <span>New Note</span>
+                </button>
+
+                <!-- Folders -->
+                <div class="mb-4">
+                    <h3 class="text-xs font-semibold uppercase tracking-wider mb-2 text-secondary">Folders</h3>
+                    <div id="foldersList">
+                        <div class="folder-item active" data-folder="all">
+                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                            All Notes
+                        </div>
+                        <div class="folder-item" data-folder="work">
+                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6"/>
+                            </svg>
+                            Work
+                        </div>
+                        <div class="folder-item" data-folder="personal">
+                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
+                            Personal
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes List -->
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider mb-2 text-secondary">Recent Notes</h3>
+                    <div id="notesList"></div>
+                </div>
+            </div>
+
+            <!-- Editor Area -->
+            <div id="editorContainer" class="flex-1 flex flex-col">
+                <!-- Toolbar -->
+                <div id="toolbar" class="flex justify-evenly items-center space-x-1 p-3 border-b toolbar-border w-full">
+                    <!-- Heading Buttons -->
+                    <button class="toolbar-btn" data-heading="h1" title="Heading 1">H1</button>
+                    <button class="toolbar-btn" data-heading="h2" title="Heading 2">H2</button>
+                    <!-- Font Selection -->
+                    <div class="mb-4">
+                        <label for="fontSelect" class="sr-only">Choose font</label>
+                        <select id="fontSelect" class="px-2 py-1 rounded border text-sm w-20">
+                            <option value="Inter">Inter</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Helvetica">Helvetica</option>
+                            <option value="Monaco">Monaco</option>
+                        </select>
+                    </div>
+                    <!-- Font Size Controls -->
+                    <div class="flex items-center space-x-1">
+                        <button id="decreaseFontBtn" class="toolbar-btn text-lg font-bold">−</button>
+                        <span id="fontSizeDisplay" class="text-sm w-8 text-center">14</span>
+                        <button id="increaseFontBtn" class="toolbar-btn text-lg font-bold">+</button>
+                    </div>
+                     <!-- Text Color Button -->
+                    <button class="toolbar-btn" id="fontColorBtn" title="Text Color">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M5 20h14v-2H5v2z" />
+                            <path d="M9 4h6l4 12h-2l-1-3H8l-1 3H5l4-12zm1.5 2L8 11h8l-2.5-5h-3z" />
+                        </svg>
+                    </button>
+                    <input type="color" id="fontColorPicker" class="hidden" aria-label="Select text color">
+
+                    <!-- Highlight Color Button -->
+                    <button class="toolbar-btn" id="highlightColorBtn" title="Highlight Color">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M3 17l6-6 2 2 8-8 2 2-10 10-2-2-6 6z" />
+                        </svg>
+                    </button>
+                    <input type="color" id="highlightColorPicker" class="hidden" aria-label="Select highlight color">
+
+
+                    <button class="toolbar-btn" data-command="bold" title="Bold (Ctrl+B)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"/>
+                        </svg>
+                    </button>
+                    <button class="toolbar-btn" data-command="italic" title="Italic (Ctrl+I)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 4l-2 14m8-14l-2 14"/>
+                        </svg>
+                    </button>
+                    <button class="toolbar-btn" data-command="underline" title="Underline (Ctrl+U)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19h14M7 3v10a3 3 0 106 0V3"/>
+                        </svg>
+                    </button>
+                    <div class="h-6 w-px bg-gray-300 mx-2"></div>
+                    <label for="headingSelect" class="sr-only">Text heading level</label>
+                    
+                    <div class="h-6 w-px bg-gray-300 mx-2"></div>
+                    <button class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    
+                </div>
+
+                <!-- Note Title -->
+                <div class="p-4 border-b border-color">
+                    <input type="text" id="noteTitle" placeholder="Note title..." 
+                           class="w-full text-xl font-semibold bg-transparent border-none outline-none"
+                           >
+                </div>
+
+                <!-- Editor -->
+                <div class="flex-1 p-4">
+                    <div id="editor" 
+                         contenteditable="true" 
+                         class="note-editor w-full h-full p-4 rounded-lg resize-none outline-none text-sm leading-relaxed"
+                    
+                         placeholder="Start typing your note..."></div>
+                </div>
+
+                <!-- Note Meta Info -->
+                <div class="p-4 border-t text-xs flex items-center justify-between border-color text-secondary">
+                    <div class="flex items-center space-x-4">
+                        <span id="wordCount">0 words</span>
+                        <span id="lastSaved">Auto-saved</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label for="folderSelect" class="sr-only">Choose folder type</label>
+                        <select id="folderSelect" class="text-xs px-2 py-1 rounded border">
+                            <option value="personal">Personal</option>
+                            <option value="work">Work</option>
+                        </select>
+                        <button id="favoriteBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700" title="Star this note">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>
