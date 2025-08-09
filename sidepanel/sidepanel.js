@@ -157,6 +157,22 @@ class QuickNotesApp {
                 this.dom.sidebar.classList.remove('open');
             }
         });
+
+                // Sidebar toggle
+        document.getElementById('toggleSidebarBtn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleSidebarBtn');
+        
+            if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+        
+
     }
 
     /**
