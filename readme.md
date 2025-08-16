@@ -1,86 +1,113 @@
 # NoteNest 📝
 
-NoteNest is a feature-rich note-taking application designed to live in your browser's side panel, providing a seamless and integrated workspace for capturing thoughts, organizing ideas, and formatting notes without leaving your current tab.
-
-![NoteNest Screenshot](Screenshot%20(60).png)
-
----
+**NoteNest** is a sleek and powerful note-taking extension designed to live in your browser's side panel. Capture your thoughts, format your ideas, and organize your knowledge without ever leaving your current tab.
 
 ## ✨ Key Features
 
-NoteNest is packed with features designed for an efficient and pleasant note-taking experience.
+NoteNest is packed with features to make your note-taking experience as smooth and efficient as possible.
 
-#### Rich Text Editing
-* **Headings:** Apply H1 and H2 styles with pre-defined font sizes for clear document structure.
-* **Standard Formatting:** Toggle **Bold**, *Italic*, and <u>Underline</u> for selected text, with logic that prevents conflicts with heading styles.
-* **Font Control:** Incrementally change font size with `+` and `-` buttons or type a specific size directly into an input box.
-* **Color Tools:** Apply any color to selected text using a color picker.
-* **Highlighting:** Use a dropdown menu to select from three pre-defined, readable highlight colors (Yellow, Red, Blue).
-* **Lists:** Create bulleted lists for organized content.
+  * **✍️ Rich Text Editor:** Go beyond plain text. NoteNest's editor allows you to:
 
-#### Note Organization
-* **Folders:** Organize notes into custom folders. New folders can be created, and existing folders can be renamed via a right-click context menu.
-* **Folder View:** Click on a folder to see all notes within it displayed in a clean, grid-based view.
-* **Tagging:** Add multiple tags to any note for flexible, cross-folder categorization.
-* **Favorites:** Mark important notes as favorites with a star icon for quick identification.
-* **Recent Notes:** The sidebar automatically displays your 3 most recently modified notes for quick access.
+      * **Style Text:** **Bold**, *Italic*, and \<u\>Underline\</u\> your content.
+      * **Add Lists:** Organize thoughts with bullet points.
+      * **Customize Fonts:** Choose from a wide range of font sizes.
+      * **Add Color:** Use a color picker for text and multiple preset colors for highlighting.
 
-#### Efficient Workflow
-* **Collapsible Sidebar:** The navigation panel containing folders and notes can be toggled open or closed for a focused writing experience.
-* **Global Search:** A powerful search bar allows you to find notes by their title or content instantly.
-* **Auto-Linking:** URLs pasted into the editor are automatically converted into clickable links.
-* **Clickable Links:** Links within a note are active and open in a new browser tab when clicked.
-* **Auto-Save:** Notes are saved automatically moments after you stop typing, with a "Last Saved" timestamp in the footer.
-* **Word Count:** A real-time word count is displayed in the editor footer.
+  * **🗂️ Seamless Organization:** Keep your notes tidy and easy to find.
 
-#### Browser Integration
-* **Chrome Side Panel:** Built as a modern Chrome Extension that opens in the browser's side panel.
-* **Global Shortcuts:** Use keyboard shortcuts like `Alt+N` to create a new note from anywhere in the browser.
+      * **Folders:** Group related notes into folders. You can easily add new folders and rename existing ones with a simple right-click.
+      * **Tags:** Add custom tags to your notes for granular, cross-folder categorization.
+      * **Favorites:** Mark important notes with a star for quick access.
 
----
+  * **⚡️ Fast & Efficient Workflow:**
 
-## 🛠️ Tech Stack
+      * **Instant Search:** Quickly find the note you're looking for with a powerful search that filters your notes in real-time.
+      * **Auto-Save:** Never lose your work. Notes are automatically saved to your local storage seconds after you stop typing.
+      * **Word Count:** Keep track of your note's length with a live word counter.
 
-* **Platform:** Chrome Extension API (Manifest V3)
-* **Frontend:** HTML5, CSS3, JavaScript (ES6 Classes)
-* **Styling:** [Tailwind CSS](https://tailwindcss.com/) for a utility-first styling workflow.
-* **Animation:** [GSAP (GreenSock Animation Platform)](https://gsap.com/) for smooth UI animations.
+  * **🧠 Smart & Secure:**
 
----
+      * **Automatic Link Conversion:** Paste a URL and NoteNest will automatically convert it into a clickable link.
+      * **Secure by Design:** All notes are saved locally on your machine using `chrome.storage`. The editor also includes built-in HTML sanitization to protect against malicious content.
 
-## 🚀 Installation & Setup
+## 📸 Screenshots
 
-To get a local copy up and running, follow these simple steps.
+![alt text](docs/NoteNest1.png)
 
-1.  **Clone the Repository**
-    ```sh
-    git clone [https://github.com/your-username/notenest.git](https://github.com/your-username/notenest.git)
+![alt text](docs/NoteNest2.png)
+
+![alt text](docs/NoteNestBanner.png)
+
+
+## 🚀 Installation
+
+### For End-Users (Recommended)
+
+*(Once you publish your extension, you can update this section)*
+
+1.  Install NoteNest from the [Chrome Web Store](https://www.google.com/search?q=link-to-your-extension).
+2.  Click the extensions icon in your browser and pin NoteNest for easy access.
+3.  Open the side panel and start taking notes\!
+
+### For Developers
+
+If you want to run the extension from the source code:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/NoteNest.git
     ```
-2.  **Install Dependencies**
-    This project uses Tailwind CSS. You will need Node.js and npm installed.
-    ```sh
+2.  **Install dependencies:**
+    ```bash
     npm install
     ```
-3.  **Build the CSS**
-    Run the build command to compile `input.css` into `sidepanel.css`.
-    ```sh
-    # For a single build
+3.  **Build the project (if you have a build step for Tailwind CSS):**
+    ```bash
     npm run build
-
-    # Or to watch for changes continuously during development
-    npm run watch
     ```
-    *(You may need to configure the build command in your `package.json`)*
+4.  **Load the extension in your browser:**
+      * Open Google Chrome or Microsoft Edge.
+      * Navigate to `chrome://extensions`.
+      * Enable **"Developer mode"** in the top-right corner.
+      * Click on **"Load unpacked"**.
+      * Select the `dist` folder (or the root project folder if you don't have a build step).
 
-4.  **Load the Extension in Chrome**
-    * Open Google Chrome and navigate to `chrome://extensions`.
-    * Enable "Developer mode" using the toggle in the top-right corner.
-    * Click the "Load unpacked" button.
-    * Select the directory containing your project files (the folder with `manifest.json`).
-    * The NoteNest icon should now appear in your browser's toolbar.
+## 💡 How to Use
 
----
+  * **Create a Note:** Click the `+ New Note` button in the sidebar.
+  * **Format Text:** Use the toolbar at the top of the editor to apply formatting.
+  * **Organize:**
+      * Select a folder from the dropdown at the bottom of the editor.
+      * Type a tag in the input field and press `Enter` to add it.
+      * Click the star icon to mark a note as a favorite.
+  * **Manage Folders:**
+      * Click the `+` icon next to the "Folders" heading to create a new folder.
+      * Right-click on any folder (except "All Notes") to bring up a context menu to rename it.
 
-## 📂 File Structure
+## ⌨️ Keyboard Shortcuts
 
-The project is organized into logical folders and files:
+*(Based on your `sidepanel.js` listeners, you can configure these in `manifest.json`)*
+
+  * **New Note:** `Ctrl+Shift+N` (Example)
+  * **Focus Search Bar:** `Ctrl+Shift+F` (Example)
+
+## 🛠️ Technology Stack
+
+  * **HTML5**
+  * **CSS3** with **Tailwind CSS**
+  * **Vanilla JavaScript (ES6+)**
+  * **Web Extensions API**
+
+## 🤝 Contributing
+
+Contributions are welcome\! If you have ideas for new features or have found a bug, please open an issue or submit a pull request.
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
