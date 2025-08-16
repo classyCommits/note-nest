@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteNest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sidepanel.css">
+</head>
+
+<body class="h-full">
+    <div id="app" class="h-full flex flex-col panel-enter">
+        <header class="flex items-center justify-center p-4 border-b border-color relative">
+            <button id="toggleSidebarBtn" aria-label="Toggle Sidebar"
+                class="absolute left-4 p-2 rounded-md hover:bg-indigo-100">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+            <div class="flex items-center space-x-2 group cursor-default">
+                <svg class="w-6 h-6 icon-primary transition-transform duration-300 ease-out group-hover:rotate-[-12deg] group-hover:scale-110"
+                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Notepad icon -->
+                    <rect x="5" y="3" width="14" height="18" rx="1" stroke="var(--color-accent-dark)"
+                        stroke-width="1.5" />
+                    <line x1="8" y1="7" x2="16" y2="7" stroke="var(--color-accent-dark)" stroke-width="1" />
+                    <line x1="8" y1="10" x2="16" y2="10" stroke="var(--color-accent-dark)" stroke-width="1" />
+                    <line x1="8" y1="13" x2="14" y2="13" stroke="var(--color-accent-dark)" stroke-width="1" />
+                    <circle cx="7" cy="7" r="0.5" fill="var(--color-accent-dark)" />
+                    <circle cx="7" cy="10" r="0.5" fill="var(--color-accent-dark)" />
+                    <circle cx="7" cy="13" r="0.5" fill="var(--color-accent-dark)" />
+                </svg>
+                <h1 id="logo-title" class="text-lg font-semibold tracking-wider">NoteNest</h1>
+            </div>
+        </header>
+
+        <div class="flex-1 flex overflow-hidden">
+            <div id="sidebar" class="w-[250px] flex-shrink-0 border-r p-3 overflow-y-auto border-color"
+                aria-label="Side panel">
+                <div class="mb-4">
+                    <input type="text" id="searchInput" placeholder="Search notes..."
+                        class="search-input w-full px-3 py-2 text-sm rounded-lg focus:outline-none"
+                        aria-label="Search notes" role="searchbox">
+                </div>
+
+            <button id="newNoteBtn"
+                class="btn-primary w-full py-2 px-4 rounded-lg text-sm font-medium mb-4 flex items-center justify-center space-x-2"
+                aria-label="Create new note" role="button">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                <span>New Note</span>
+            </button>
+
+            <div class="mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-secondary">Folders</h3>
+                    <button id="addFolderBtn"
+                        class="add-folder-btn flex items-center justify-center rounded-full w-6 h-6 text-xs"
+                        title="Add folder">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="overflow-y-auto max-h-48">
+                    <div id="foldersList">
+                        <div class="folder-item active" data-folder="all">
+                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                            </svg>
+                            All Notes
+                        </div>
+
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider mb-2 text-secondary">Recent Notes</h3>
+                    <div id="notesList"></div>
+                </div>
+
+            </div>
+        </div> <!-- End of sidebar -->
+            
+            <!-- Context menu for folder options -->
+            <div id="folderContextMenu"
+                class="context-menu hidden absolute bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50">
+                <div class="context-menu-item px-4 py-2 text-sm cursor-pointer hover:bg-indigo-100"
+                    data-action="rename">Rename</div>
+            </div>
+
+            <div id="editorContainer" class="flex flex-col flex-1 overflow-hidden" aria-label="Editor area">
+                <!-- Folder Notes View (Hidden by default) -->
+                <div id="folderNotesView" class="flex flex-col h-full hidden">
+                    <div class="p-4 border-b border-color flex-shrink-0">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 id="folderNameHeader" class="text-xl font-semibold">Folder Name</h2>
+                            <button id="backToEditorBtn" class="folder-window-btn">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Back to Editor
+                            </button>
+                        </div>
+                        <div class="mb-4">
+                            <input type="text" id="folderSearchInput" placeholder="Search notes in folder..."
+                                class="search-input w-full px-3 py-2 text-sm rounded-lg focus:outline-none">
+                        </div>
+                    </div>
+                    <div id="folderNotesList"
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto flex-1 p-4">
+                        </div>
+                </div>
+
+                <!-- Editor View -->
+                <div id="editorView" class="flex flex-col h-full">
+                    <div id="toolbar"
+                        class="flex justify-evenly items-center space-x-1 p-3 border-b toolbar-border w-full"
+                        role="toolbar" aria-label="Text formatting">
+                        <div class="relative">
+                            <label for="fontSizeSelect" class="sr-only">Font Size</label>
+                            <select id="fontSizeSelect" class="toolbar-btn text-sm" aria-label="Select font size">
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="14">14</option>
+                                <option value="16">16</option>
+                                <option value="18">18</option>
+                                <option value="20">20</option>
+                                <option value="24">24</option>
+                                <option value="30">30</option>
+                                <option value="36">36</option>
+                                <option value="48">48</option>
+                                <option value="60">60</option>
+                                <option value="72">72</option>
+                            </select>
+                        </div>
+                        <button class="toolbar-btn" id="fontColorBtn" title="Text Color">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                            </svg>
+                        </button>
+                        <input type="color" id="fontColorPicker" class="hidden" aria-label="Select text color">
+
+                        <div class="relative">
+                            <button class="toolbar-btn" id="highlightColorBtn" title="Highlight Color">
+                                <svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 19.82a2.25 2.25 0 01-1.272.727l-4.216 1.132a.75.75 0 01-.92-1.025l1.132-4.216a2.25 2.25 0 01.727-1.272L16.863 4.487z" />
+                                </svg>
+                            </button>
+                            <div id="highlightOptions"
+                                class="hidden absolute top-full mt-2 bg-white rounded-md shadow-lg border border-gray-200 p-2 flex space-x-2 z-10">
+                                <div class="color-option w-6 h-6 rounded cursor-pointer border-2 border-gray-300 mb-2 flex items-center justify-center bg-white hover:bg-gray-50" 
+                                    data-color="none" 
+                                    title="Remove highlight">
+                                    <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                </div>
+                                <div class="w-6 h-6 rounded cursor-pointer"
+                                    style="background-color: rgba(253, 224, 71, 0.5);"
+                                    data-color="rgba(253, 224, 71, 0.5)"></div>
+                                <div class="w-6 h-6 rounded cursor-pointer"
+                                    style="background-color: rgba(252, 165, 165, 0.5);"
+                                    data-color="rgba(252, 165, 165, 0.5)"></div>
+                                <div class="w-6 h-6 rounded cursor-pointer"
+                                    style="background-color: rgba(147, 197, 253, 0.5);"
+                                    data-color="rgba(147, 197, 253, 0.5)"></div>
+                            </div>
+                        </div>
+
+
+                        <button class="toolbar-btn" data-command="bold" title="Bold (Ctrl+B)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8.25 5.25h4.5a3.75 3.75 0 013.75 3.75v.038a3.75 3.75 0 01-3.75 3.75H8.25v-7.5zm0 7.5h5.25a3.75 3.75 0 013.75 3.75v.038a3.75 3.75 0 01-3.75 3.75H8.25v-7.5z" />
+                            </svg>
+                        </button>
+                        <button class="toolbar-btn" data-command="italic" title="Italic (Ctrl+I)">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Modern "I" design with top line, bottom line, and slanting middle line -->
+                                <path d="M6 6H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <path d="M6 18H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <path d="M10 8L14 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                        </button>
+                        <button class="toolbar-btn" data-command="underline" title="Underline (Ctrl+U)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5.25 18.75h13.5M6.75 4.5v7.5a5.25 5.25 0 0010.5 0V4.5" />
+                            </svg>
+                        </button>
+
+                       
+                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 17.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                            </svg>
+                        </button>
+
+                    </div>
+
+                    <div class="p-4 border-b border-color">
+                        <input type="text" id="noteTitle" placeholder="Note title..."
+                            class="w-full text-xl font-semibold bg-transparent border-none outline-none">
+                    </div>
+
+                    <div id="editor-body" class="flex-1 p-4 overflow-y-auto">
+                        <div id="editor" contenteditable="true"
+                            class="note-editor w-full h-full p-4 rounded-lg resize-none outline-none text-sm leading-relaxed"
+                            role="textbox" aria-multiline="true" aria-label="Note content"
+                            aria-placeholder="Start typing your note..." tabindex="0"></div>
+                    </div>
+
+                    <div
+                        class="p-4 border-t text-xs flex items-center justify-between border-color text-secondary bg-white">
+                        <div class="flex items-center space-x-4" role="status">
+                            <span id="wordCount" aria-live="polite">0 words</span>
+                            <span id="lastSaved" aria-live="polite">Auto-saved</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label for="folderSelect" class="sr-only">Choose folder type</label>
+                            <select id="folderSelect" class="text-xs px-2 py-1 rounded border">
+                                <!-- Folder options will be populated dynamically -->
+                            </select>
+                            <div class="flex items-center space-x-1">
+                                <input type="text" id="tagInput" class="text-xs px-2 py-1 rounded border"
+                                    placeholder="Add tag">
+                                <button id="addTagBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+                                    title="Add tag">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <button id="favoriteBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+                                title="Star this note">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-3.152a.563.563 0 00-.652 0l-4.725 3.152a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="tagsContainer" class="px-4 py-1 border-t border-color">
+                        <div id="tagsList" class="flex flex-wrap gap-1"></div>
+                    </div>
+                </div> <!-- End of editorView -->
+            </div> <!-- End of editorContainer -->
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-lg p-6 w-96 max-w-[90vw]">
+                <h3 class="text-lg font-semibold mb-4">Confirm Deletion</h3>
+                <p class="mb-4">Are you sure you want to delete this note? This action cannot be undone.</p>
+                <div class="flex items-center mb-4">
+                    <input type="checkbox" id="doNotAskAgain" class="mr-2">
+                    <label for="doNotAskAgain">Don't ask again</label>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button id="cancelDeleteBtn" class="px-4 py-2 rounded border border-gray-300">Cancel</button>
+                    <button id="confirmDeleteBtn" class="px-4 py-2 rounded bg-red-500 text-white">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="sidepanel.js"></script>
+</body>
+
+</html>
