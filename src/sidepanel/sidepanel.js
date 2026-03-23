@@ -760,44 +760,25 @@ class NoteNest {
      * @param {string} folderName - The name of the folder.
      */
     showFolderContextMenu(e, folderName) {
-        // Set the folder name as a data attribute for later use
         this.dom.folderContextMenu.dataset.folder = folderName;
-
-        // Position the context menu
         this.dom.folderContextMenu.style.left = `${e.pageX}px`;
-        this.dom.folderContextMenu.style.top = `${e.pageY}px`;
-
-        // Show the context menu
+        this.dom.folderContextMenu.style.top  = `${e.pageY}px`;
         this.dom.folderContextMenu.classList.remove('hidden');
 
-        // Add event listener to hide the context menu when clicking elsewhere
-        const hideContextMenu = (event) => {
+        const close = (event) => {
             if (!this.dom.folderContextMenu.contains(event.target)) {
                 this.dom.folderContextMenu.classList.add('hidden');
-                document.removeEventListener('click', hideContextMenu);
             }
         };
+        document.addEventListener('click', close, { once: true });
 
-        // Add event listener to handle context menu item clicks
-        const handleContextMenuClick = (event) => {
+        this.dom.folderContextMenu.addEventListener('click', (event) => {
             const menuItem = event.target.closest('.context-menu-item');
-            if (menuItem) {
-                const action = menuItem.dataset.action;
-                if (action === 'rename') {
-                    this.renameFolder(folderName);
-                }
-                this.dom.folderContextMenu.classList.add('hidden');
-                document.removeEventListener('click', handleContextMenuClick);
+            if (menuItem?.dataset.action === 'rename') {
+                this.renameFolder(folderName);
             }
-        };
-
-        // Remove any existing listeners to prevent duplicates
-        document.removeEventListener('click', hideContextMenu);
-        document.removeEventListener('click', handleContextMenuClick);
-
-        // Add the new listeners
-        document.addEventListener('click', hideContextMenu);
-        this.dom.folderContextMenu.addEventListener('click', handleContextMenuClick);
+            this.dom.folderContextMenu.classList.add('hidden');
+        }, { once: true });
     }
     /**
      * Renames a folder and updates all notes in that folder.
