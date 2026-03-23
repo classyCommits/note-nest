@@ -1299,12 +1299,9 @@ class NoteNest {
                 return;
             }
 
-            // Process child nodes
-            if (node.childNodes) {
-                /**
-                 * FIX: Snapshot the live NodeList into a static Array.
-                 * This prevents index shifting when we call replaceChild().
-                 */
+            
+                // Snapshot the live NodeList into a static Array to prevent
+                // index shifting when replaceChild() is called inside the loop.
                 Array.from(node.childNodes).forEach(childNode => {
                     
                     // Process text nodes
@@ -1349,7 +1346,7 @@ class NoteNest {
                         processNode(childNode);
                     }
                 });
-            }
+            
         };
 
         // Process the temporary div
