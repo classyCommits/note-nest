@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
     <title>NoteNest</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +17,7 @@
         <header class="flex items-center justify-center p-4 border-b border-color relative">
             <button type="button" id="toggleSidebarBtn" aria-label="Toggle Sidebar"
                 class="absolute left-4 p-2 rounded-md hover:bg-indigo-100">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                         d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -34,7 +35,7 @@
                     <circle cx="7" cy="10" r="0.5" fill="var(--color-accent-dark)" />
                     <circle cx="7" cy="13" r="0.5" fill="var(--color-accent-dark)" />
                 </svg>
-                <h1 id="logo-title" class="text-lg font-semibold tracking-wider">NoteNest</h1>
+                
             </div>
         </header>
 
@@ -42,49 +43,49 @@
             <div id="sidebar" class="w-[250px] flex-shrink-0 border-r p-3 overflow-y-auto border-color"
                 aria-label="Side panel" role="complementary">
                 <div class="mb-4">
-                    <input type="text" id="searchInput" placeholder="Search notes..."
+                    <input type="search" id="searchInput" placeholder="Search notes..."
                         class="search-input w-full px-3 py-2 text-sm rounded-lg focus:outline-none"
                         aria-label="Search notes" role="searchbox">
                 </div>
 
-            <button type="button" id="newNoteBtn"
-                class="btn-primary w-full py-2 px-4 rounded-lg text-sm font-medium mb-4 flex items-center justify-center space-x-2"
-                aria-label="Create new note" >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-                <span>New Note</span>
-            </button>
+                <button type="button" id="newNoteBtn"
+                    class="btn-primary w-full py-2 px-4 rounded-lg text-sm font-medium mb-4 flex items-center justify-center space-x-2"
+                    aria-label="Create new note" >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    <span>New Note</span>
+                </button>
 
-            <div class="mb-4">
-                <div class="flex items-center justify-between mb-2">
-                    <h3 class="text-xs font-semibold uppercase tracking-wider text-secondary">Folders</h3>
-                    <button type="button" id="addFolderBtn"
-                        class="add-folder-btn flex items-center justify-center rounded-full w-6 h-6 text-xs"
-                        title="Add folder">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="overflow-y-auto max-h-48">
-                    <div id="foldersList">
-                        <div class="folder-item active" data-folder="all">
-                            <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                    d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-secondary">Folders</h3>
+                        <button type="button" id="addFolderBtn"
+                            class="add-folder-btn flex items-center justify-center rounded-full w-6 h-6 text-xs"
+                            title="Add folder">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
-                            All Notes
-                        </div>
-
+                        </button>
                     </div>
-                </div>
+                    <div class="overflow-y-auto max-h-48">
+                        <div id="foldersList">
+                            <div class="folder-item active" data-folder="all">
+                                <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                        d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                                </svg>
+                                All Notes
+                            </div>
 
-                <div>
-                    <h3 class="text-xs font-semibold uppercase tracking-wider mb-2 text-secondary">Recent Notes</h3>
-                    <div id="notesList"></div>
-                </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-semibold uppercase tracking-wider mb-2 text-secondary">Recent Notes</h3>
+                        <div id="notesList"></div>
+                    </div>
 
             </div>
         </div> <!-- End of sidebar -->
@@ -103,7 +104,7 @@
                         <div class="flex items-center justify-between mb-4">
                             <h2 id="folderNameHeader" class="text-xl font-semibold">Folder Name</h2>
                             <button type="button" id="backToEditorBtn" class="folder-window-btn">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                 </svg>
@@ -111,7 +112,7 @@
                             </button>
                         </div>
                         <div class="mb-4">
-                            <input type="text" id="folderSearchInput" placeholder="Search notes in folder..."
+                            <input type="search" id="folderSearchInput" placeholder="Search notes in folder..."
                                 class="search-input w-full px-3 py-2 text-sm rounded-lg focus:outline-none">
                         </div>
                     </div>
@@ -192,7 +193,6 @@
                         </button>
                         <button type="button" class="toolbar-btn" data-command="italic" title="Italic (Ctrl+I)" aria-label="Italic">
                             <svg class="w-4 h-4" aria-hidden="true" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Modern "I" design with top line, bottom line, and slanting middle line -->
                                 <path d="M6 6H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                                 <path d="M6 18H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                                 <path d="M10 8L14 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -224,7 +224,7 @@
                         <div id="editor" contenteditable="true"
                             class="note-editor w-full h-full p-4 rounded-lg resize-none outline-none text-sm leading-relaxed"
                             role="textbox" aria-multiline="true" aria-label="Note content"
-                            aria-placeholder="Start typing your note..." tabindex="0"></div>
+                            tabindex="0"></div>
                     </div>
 
                     <div
@@ -241,15 +241,15 @@
                             <div class="flex items-center space-x-1">
                                 <input type="text" id="tagInput" class="text-xs px-2 py-1 rounded border"
                                     placeholder="Add tag">
-                                <button type="button" id="addTagBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+                                <button type="button" id="addTagBtn" class="p-1 rounded hover:bg-gray-200"
                                     title="Add tag">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
                                 </button>
                             </div>
-                            <button type="button" id="favoriteBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+                            <button type="button" id="favoriteBtn" class="p-1 rounded hover:bg-gray-200"
                                 title="Star this note">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -258,9 +258,7 @@
                             </button>
                         </div>
                     </div>
-                    <div id="tagsContainer" class="px-4 py-1 border-t border-color">
-                        <div id="tagsList" class="flex flex-wrap gap-1"></div>
-                    </div>
+                    
                 </div> <!-- End of editorView -->
             </div> <!-- End of editorContainer -->
         </div>
