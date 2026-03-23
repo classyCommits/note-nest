@@ -153,6 +153,27 @@ class NoteNest {
         this.dom.backToEditorBtn.addEventListener('click', () => this.showEditorView());
         this.dom.folderSearchInput.addEventListener('input', this.debounce((e) => this.searchFolderNotes(e.target.value), 300));
 
+        // Event delegation for folder notes grid — registered once here instead
+        // of being re-added inside renderFolderNotesList() on every render call
+        this.dom.folderNotesList.addEventListener('click', (e) => {
+            const noteCard = e.target.closest('.note-card');
+            if (noteCard) {
+                this.loadNote(noteCard.dataset.noteId);
+                this.showEditorView();
+            }
+        });
+
+        // Context menu for folder rename (right-click) — registered once here
+        // instead of being re-added inside renderFolderList() on every render call
+        this.dom.foldersList.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const folderItem = e.target.closest('.folder-item');
+            if (folderItem && folderItem.dataset.folder !== 'all') {
+                this.showFolderContextMenu(e, folderItem.dataset.folder);
+            }
+        });
+        
+
         // Use event delegation for notes list to improve performance
         this.dom.notesList.addEventListener('click', (e) => {
             const noteCard = e.target.closest('.note-card');
@@ -1025,14 +1046,6 @@ class NoteNest {
 
         this.dom.folderNotesList.appendChild(fragment);
 
-        // Add event listeners for note selection
-        this.dom.folderNotesList.querySelectorAll('.note-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                const noteId = card.dataset.noteId;
-                this.loadNote(noteId);
-                this.showEditorView();
-            });
-        });
     }
 
     /**
@@ -1093,17 +1106,6 @@ class NoteNest {
             foldersList.appendChild(folderElement);
         });
 
-
-
-
-        // Add context menu event listener for right-click on folder items
-        foldersList.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            const folderItem = e.target.closest('.folder-item');
-            if (folderItem && folderItem.dataset.folder !== 'all') {
-                this.showFolderContextMenu(e, folderItem.dataset.folder);
-            }
-        });
 
         // Update folder select dropdown
         this.updateFolderSelect();
