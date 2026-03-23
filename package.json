@@ -9,7 +9,7 @@
     "dev": "tailwindcss -i ./src/sidepanel/input.css -o ./dist/sidepanel/sidepanel.css --watch"
   },
   "keywords": [],
-  "author": "",
+  "author": "Aniruddha Gedam",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.21",

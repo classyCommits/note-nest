@@ -243,7 +243,6 @@
     color: #1e1b4b; /* A dark Indigo for high contrast text */
   }
 
-/* --- Corrected Sidebar Styling (Replaces previous animation code) --- */
 #sidebar {
     /* Use a transition on margin for a smooth slide */
     transition: margin-left 0.3s ease-in-out;
@@ -292,7 +291,7 @@
 /* Add this rule to control the main panel's scrollbars */
 html, body {
   height: 100%;          /* Ensure the body correctly fills the viewport */
-  overflow:hidden;     /* This will show a horizontal scrollbar only if needed */
+  overflow: hidden;     /* This will show a horizontal scrollbar only if needed */
 }
 
 
