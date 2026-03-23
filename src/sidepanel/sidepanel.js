@@ -105,13 +105,6 @@ class NoteNest {
         this.dom.confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 
     }
-     
-    _setGlobalFontSize(newSize) {
-    this.settings.fontSize = String(newSize);
-    this.dom.fontSizeDisplay.value = newSize; // Keep display in sync
-    this.dom.editor.style.fontSize = `${newSize}px`; // Apply to editor immediately
-    this.saveData();
-    }
 
 
     _setupEventListeners() {
@@ -353,13 +346,12 @@ class NoteNest {
 
         this.dom.confirmDeleteBtn.addEventListener('click', () => {
             if (this.noteToDelete) {
-                // Check if "Don't ask again" is checked
                 if (this.dom.doNotAskAgain.checked) {
-                    // Save the preference to never ask again
                     this.settings.confirmDelete = false;
                     this.saveData();
                 }
                 this.performDelete(this.noteToDelete);
+                this.noteToDelete = null;
             }
             this.hideConfirmationModal();
         });
@@ -385,7 +377,7 @@ class NoteNest {
 
         // A list of attributes that are considered safe for the allowed tags.
         // We especially need 'style' for colors/highlights and 'href' for links.
-        const allowedAttrs = ['style', 'href'];
+        const allowedAttrs = ['style', 'href', 'data-font-size-span'];
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(dirtyHTML, 'text/html');
@@ -1628,6 +1620,7 @@ class NoteNest {
     hideConfirmationModal() {
         this.dom.confirmationModal.classList.add('hidden');
         this.dom.doNotAskAgain.checked = false;
+        this.noteToDelete = null;
     }
 
         /**
