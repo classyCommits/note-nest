@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "description": "NoteNest - A Chrome extension for taking notes in the browser sidepanel",
   "scripts": {
-    "build:css":  "tailwindcss -i ./src/sidepanel/input.css -o ./dist/sidepanel/sidepanel.css --minify",
+    "build:css": "tailwindcss -i ./src/sidepanel/input.css -o ./dist/sidepanel/sidepanel.css --minify",
     "build:copy": "node scripts/build.js",
-    "build":      "npm run build:copy && npm run build:css",
-    "dev":        "tailwindcss -i ./src/sidepanel/input.css -o ./dist/sidepanel/sidepanel.css --watch"
+    "build": "npm run build:copy && npm run build:css",
+    "dev": "tailwindcss -i ./src/sidepanel/input.css -o ./dist/sidepanel/sidepanel.css --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.4.21",
-    "tailwindcss":  "^3.4.13"
+    "tailwindcss": "^3.4.13"
   }
 }
