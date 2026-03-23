@@ -1654,6 +1654,16 @@ class NoteNest {
         this.renderFolderList();
         this.updateFolderSelect();
     }
+
+    /**
+    * Briefly animates a button with a pulse effect.
+    * @param {Element} element
+    */
+    _pulseAnimation(element) {
+        element.classList.add('pulse');
+        setTimeout(() => element.classList.remove('pulse'), 300);
+    }
+
     /**
      * Debounce function to limit the rate at which a function is called.
      * @param {Function} func - The function to debounce.
