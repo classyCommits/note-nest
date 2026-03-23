@@ -23,15 +23,15 @@ class NoteManager {
         }
     }
 
-    createNewNote() {
+    createNewNote(folder = 'personal') {
         const note = {
-            id: Date.now().toString(),
-            title: 'Untitled Note',
-            content: '',
-            folder: 'personal',
-            tags: [],
-            favorite: false,
-            createdAt: new Date().toISOString(),
+            id:           Date.now().toString(),
+            title:        'Untitled Note',
+            content:      '',
+            folder,
+            tags:         [],
+            favorite:     false,
+            createdAt:    new Date().toISOString(),
             lastModified: new Date().toISOString()
         };
         this.notes.unshift(note);

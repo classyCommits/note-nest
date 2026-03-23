@@ -15,6 +15,7 @@ class NoteNest {
         this.currentNote = null;
         this.currentFolder = null;
         this.storedSelection = null;
+        this.noteToDelete = null;
         this.settings = {
             fontSize: '14',
             autoSave: true,
@@ -935,10 +936,10 @@ class NoteNest {
      * @param {string} query - The search term.
      */
     searchNotes(query) {
-        const lowerCaseQuery = query.toLowerCase();
+        const q = query.toLowerCase();
         const filtered = this.notes.filter(note =>
-            note.title.toLowerCase().includes(lowerCaseQuery) ||
-            note.content.toLowerCase().includes(lowerCaseQuery)
+            note.title.toLowerCase().includes(q) ||
+            this._getTextContent(note.content).toLowerCase().includes(q)
         );
         this.renderNotesList(filtered);
         this.updateFolderSelect();
@@ -1352,12 +1353,10 @@ class NoteNest {
                                 } else {
                                     // URL part - create anchor element
                                     const link = document.createElement('a');
-                                    // Add protocol if missing
-                                    const href = part.startsWith('http') ? part :
-                                        part.startsWith('www.') ? 'http://' + part :
-                                            'http://' + part;
+                                    const href = part.startsWith('http') ? part : 'https://' + part;
                                     link.href = href;
                                     link.target = '_blank';
+                                    link.rel = 'noopener noreferrer';
                                     link.textContent = part;
                                     fragment.appendChild(link);
                                 }
