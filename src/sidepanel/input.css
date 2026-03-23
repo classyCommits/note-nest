@@ -1,0 +1,147 @@
+/* sidepanel/input.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.border-color {
+  border-color: #e5e7eb; /* Using the same color as Tailwind's gray-200 */
+}
+
+
+.btn-primary {
+  background-color: #3b82f6; /* Using Tailwind's blue-500 */
+  color: white;
+  border-radius: 0.5rem; /* rounded-lg */
+  font-weight: 500; /* font-medium */
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb; /* Using Tailwind's blue-600 */
+}
+
+.add-folder-btn {
+  background-color: #f3f4f6; /* Using Tailwind's gray-100 */
+  color: #4b5563; /* Using Tailwind's gray-600 */
+  transition: background-color 0.2s ease;
+}
+
+.add-folder-btn:hover {
+  background-color: #e5e7eb; /* Using Tailwind's gray-200 */
+}
+
+.folder-item {
+  padding: 0.5rem;
+  border-radius: 0.25rem; /* rounded */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.folder-item:hover {
+  background-color: #f3f4f6; /* Using Tailwind's gray-100 */
+}
+
+.folder-item.active {
+  background-color: #e5e7eb; /* Using Tailwind's gray-200 */
+  font-weight: 500; /* font-medium */
+}
+
+.toolbar-border {
+  border-color: #e5e7eb; /* Using the same color as Tailwind's gray-200 */
+}
+
+.toolbar-btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem; /* rounded */
+  background-color: #f9fafb; /* Using Tailwind's gray-50 */
+  color: #4b5563; /* Using Tailwind's gray-600 */
+  font-weight: 500; /* font-medium */
+  transition: all 0.2s ease;
+  border: 1px solid #e5e7eb; /* Using Tailwind's gray-200 */
+}
+
+.toolbar-btn:hover {
+  background-color: #f3f4f6; /* Using Tailwind's gray-100 */
+  border-color: #d1d5db; /* Using Tailwind's gray-300 */
+}
+
+.toolbar-btn.active {
+  background-color: #3b82f6; /* Using Tailwind's blue-500 */
+  color: white;
+  border-color: #2563eb; /* Using Tailwind's blue-600 */
+}
+
+
+
+.tag {
+  background-color: #f3f4f6; /* Using Tailwind's gray-100 */
+  color: #4b5563; /* Using Tailwind's gray-600 */
+  border-radius: 0.25rem; /* rounded */
+  font-weight: 500; /* font-medium */
+}
+
+::selection {
+    background-color: #a5b4fc; /* A pleasant, semi-light Indigo color */
+    color: #1e1b4b; /* A dark Indigo for high contrast text */
+  }
+
+/* --- Corrected Sidebar Styling (Replaces previous animation code) --- */
+#sidebar {
+    /* Use a transition on margin for a smooth slide */
+    transition: margin-left 0.3s ease-in-out;
+    
+    /* By default, hide the sidebar by pulling it into a negative margin */
+    /* This requires the sidebar to have a fixed width */
+    margin-left: -250px;
+  }
+  
+  #sidebar.open {
+    /* When the 'open' class is present, slide the sidebar into view */
+    margin-left: 0;
+  }
+  
+  /* The editor container no longer needs a special rule because it is
+    a flex item and will naturally adjust to the sidebar's presence.
+  */
+  #editor ul {
+    list-style-type: disc;
+    padding-left: 40px;
+    margin-left: 0;
+}
+
+#editor li {
+    display: list-item;
+}
+
+#editor-body {
+  overflow-y: auto;
+}
+
+#fontSizeDisplay::-webkit-inner-spin-button,
+#fontSizeDisplay::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#editor span[data-font-size-span] {
+  line-height: 1.2;
+  display: inline;
+}
+
+#editor p, #editor div {
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+#editor {
+  line-height: 1.4;
+}
+
+/* Add this rule to control the main panel's scrollbars */
+html, body {
+  height: 100%;          /* Ensure the body correctly fills the viewport */
+  overflow:hidden;     /* This will show a horizontal scrollbar only if needed */
+}
+
