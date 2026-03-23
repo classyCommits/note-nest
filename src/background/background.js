@@ -2,31 +2,34 @@
  * @file background.js
  * @description Background service worker for NoteNest. Handles installation,
  * side panel behavior, and global keyboard shortcuts.
- * @version 1.0
+ * @version 1.1
  * @date 2025-08-12
  */
 
-// This listener runs once when the extension is installed or updated.
+// Open the side panel when the extension icon is clicked.
+// NOTE: This must be registered at the top level, NOT inside onInstalled,
+// because onInstalled only fires once on install/update — not on every click.
+chrome.action.onClicked.addListener((tab) => {
+  chrome.sidePanel.open({ windowId: tab.windowId });
+});
+
+// Runs once when the extension is installed or updated.
 chrome.runtime.onInstalled.addListener(() => {
   console.log('NoteNest extension installed/updated');
 
-chrome.action.onClicked.addListener((tab) => {
-  chrome.sidePanel.open({ windowId: tab.windowId });
-  });
-
-  // Initialize default settings on first install.
+  // Initialize default settings on first install only.
   chrome.storage.local.get('settings', (result) => {
     if (chrome.runtime.lastError) {
       console.error('Error getting settings:', chrome.runtime.lastError);
       return;
     }
-    
-    // If no settings exist, create them.
+
     if (!result.settings) {
       chrome.storage.local.set({
         settings: {
           fontSize: '14',
-          autoSave: true
+          autoSave: true,
+          confirmDelete: true
         }
       }, () => {
         if (chrome.runtime.lastError) {
@@ -39,35 +42,28 @@ chrome.action.onClicked.addListener((tab) => {
   });
 });
 
-
-// This function initializes the listener for global keyboard shortcuts.
-const initializeCommands = () => {
+// Listens for global keyboard shortcuts defined in manifest.json.
 if (chrome.commands && chrome.commands.onCommand) {
   chrome.commands.onCommand.addListener(async (command, tab) => {
     console.log('Keyboard shortcut triggered:', command);
-    
+
     try {
-      // First, open the side panel.
       await chrome.sidePanel.open({ windowId: tab.windowId });
-      
-      // Then, send a message to the side panel with the command name.
-      // A small delay ensures the panel is ready to receive the message.
+
+      // Small delay to ensure the side panel is ready to receive messages.
       setTimeout(() => {
         chrome.runtime.sendMessage({ action: command }, (response) => {
           if (chrome.runtime.lastError) {
-            console.error('Error sending shortcut message:', chrome.runtime.lastError.message);
+            // This error is expected if the panel isn't open yet; safe to ignore.
+            console.warn('Could not send shortcut message:', chrome.runtime.lastError.message);
           }
         });
-      }, 100);
+      }, 150);
     } catch (error) {
-      console.error('Error opening side panel from shortcut:', error);
+      console.error('Error handling shortcut:', error);
     }
   });
-  console.log('Commands API listener initialized successfully');
+  console.log('Commands listener registered');
 } else {
-  console.warn('Commands API not available');
+  console.warn('chrome.commands API not available');
 }
-};
-
-// Start the command listener.
-initializeCommands();
