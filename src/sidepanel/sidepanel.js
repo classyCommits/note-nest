@@ -1297,34 +1297,39 @@ class NoteNest {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
 
-        // Improved URL regex that matches various URL patterns including:
-        // - http://example.com, https://example.com
-        // - www.example.com
-        // - example.com (this will be prefixed with http://)
+        // Improved URL regex
         const urlRegex = /(https?:\/\/(?:www\.)?[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,}|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,})/gi;
 
         // Function to process text nodes
         const processNode = (node) => {
-            // Skip anchor elements and their children
+            // Skip anchor elements and their children to avoid nesting links
             if (node.tagName === 'A') {
                 return;
             }
 
             // Process child nodes
             if (node.childNodes) {
-                for (let i = 0; i < node.childNodes.length; i++) {
-                    const childNode = node.childNodes[i];
+                /**
+                 * FIX: Snapshot the live NodeList into a static Array.
+                 * This prevents index shifting when we call replaceChild().
+                 */
+                Array.from(node.childNodes).forEach(childNode => {
+                    
                     // Process text nodes
                     if (childNode.nodeType === Node.TEXT_NODE) {
                         const text = childNode.textContent;
+                        
                         // Check if the text contains URLs
                         if (urlRegex.test(text)) {
-                            // Reset regex index
+                            // Reset regex index for safety
                             urlRegex.lastIndex = 0;
+                            
                             // Create a fragment to replace the text node
                             const fragment = document.createDocumentFragment();
+                            
                             // Split the text by URLs
                             const parts = text.split(urlRegex);
+                            
                             // Process each part
                             parts.forEach((part, index) => {
                                 if (index % 2 === 0) {
@@ -1343,21 +1348,22 @@ class NoteNest {
                                     fragment.appendChild(link);
                                 }
                             });
-                            // Replace the text node with the fragment
+                            
+                            // Replace the original text node with our new fragment
                             childNode.parentNode.replaceChild(fragment, childNode);
                         }
                     } else {
-                        // Process other nodes recursively
+                        // Process other elements (div, span, etc.) recursively
                         processNode(childNode);
                     }
-                }
+                });
             }
         };
 
         // Process the temporary div
         processNode(tempDiv);
 
-        // Return the modified HTML
+        // Return the modified HTML string
         return tempDiv.innerHTML;
     }
 
