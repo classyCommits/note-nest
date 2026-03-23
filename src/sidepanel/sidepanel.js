@@ -875,7 +875,8 @@ class NoteNest {
 
             // Fix: Sanitize title and preview to prevent HTML injection issues
             const title = this._sanitizeText(note.title || 'Untitled Note');
-            const preview = this._sanitizeText(this._getTextContent(note.content).substring(0, 60)) + (note.content.length > 60 ? '...' : '');
+            const rawText = this._getTextContent(note.content || '');
+            const preview = this._sanitizeText(rawText.substring(0, 60)) + (rawText.length > 60 ? '…' : '');
             
             const d = new Date(note.lastModified);
             const day = String(d.getDate()).padStart(2, '0');
@@ -1033,8 +1034,11 @@ class NoteNest {
         const lowerCaseQuery = query.toLowerCase();
         const filtered = this.notes.filter(note =>
             note.folder === this.currentFolder &&
-            (note.title.toLowerCase().includes(lowerCaseQuery) ||
-                note.content.toLowerCase().includes(lowerCaseQuery))
+            (
+                note.title.toLowerCase().includes(lowerCaseQuery) ||
+                // FIX: Strip HTML tags before searching the content
+                this._getTextContent(note.content).toLowerCase().includes(lowerCaseQuery)
+            )
         );
 
         this.renderFolderNotesList(filtered);
