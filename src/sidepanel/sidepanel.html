@@ -35,7 +35,7 @@
                     <circle cx="7" cy="10" r="0.5" fill="var(--color-accent-dark)" />
                     <circle cx="7" cy="13" r="0.5" fill="var(--color-accent-dark)" />
                 </svg>
-                
+                <h1 class="text-lg font-semibold tracking-wider">NoteNest</h1>
             </div>
         </header>
 
@@ -90,11 +90,13 @@
             </div>
         </div> <!-- End of sidebar -->
             
+        
             <!-- Context menu for folder options -->
-            <div id="folderContextMenu" class="context-menu hidden absolute ..."
+            <div id="folderContextMenu"
+                class="context-menu hidden absolute bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50"
                 role="menu" aria-label="Folder options">
-                <div class="context-menu-item ..." data-action="rename"
-                    role="menuitem" tabindex="-1">Rename</div>
+                <div class="context-menu-item px-4 py-2 text-sm cursor-pointer hover:bg-indigo-100"
+                    data-action="rename" role="menuitem" tabindex="-1">Rename</div>
             </div>
 
             <div id="editorContainer" class="flex flex-col flex-1 overflow-hidden" aria-label="Editor area" role="region">
@@ -258,7 +260,9 @@
                             </button>
                         </div>
                     </div>
-                    
+                    <div id="tagsContainer" class="px-4 py-1 border-t border-color">
+                        <div id="tagsList" class="flex flex-wrap gap-1"></div>
+                    </div>
                 </div> <!-- End of editorView -->
             </div> <!-- End of editorContainer -->
         </div>
