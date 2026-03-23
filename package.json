@@ -1,6 +1,6 @@
 {
   "name": "note-nest",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "NoteNest - A Chrome extension for taking notes in the browser sidepanel",
   "scripts": {
     "build:css": "tailwindcss -i ./src/sidepanel/input.css -o ./dist/sidepanel/sidepanel.css --minify",
