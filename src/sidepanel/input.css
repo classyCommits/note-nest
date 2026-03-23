@@ -50,6 +50,9 @@
   background-color: #2563eb; /* Using Tailwind's blue-600 */
 }
 
+.context-menu {
+    min-width: 120px;
+}
 .add-folder-btn {
   background-color: #f3f4f6; /* Using Tailwind's gray-100 */
   color: #4b5563; /* Using Tailwind's gray-600 */

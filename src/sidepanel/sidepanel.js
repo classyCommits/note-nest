@@ -566,9 +566,7 @@ class NoteNest {
         return false;
     }
     
-    /**
-     * Removes highlight from selected text (simpler version)
-     */
+
     _removeHighlight() {
         this.dom.editor.focus();
         
@@ -854,7 +852,6 @@ class NoteNest {
         this.dom.notesList.innerHTML = '';
         const fragment = document.createDocumentFragment();
         
-        // Fix: Ensure we're working with a valid array
         const validNotes = Array.isArray(notesToRender) ? notesToRender : this.notes;
         
         const notesToShow = (validNotes === this.notes)
@@ -870,7 +867,7 @@ class NoteNest {
                 noteElement.classList.add('active');
             }
 
-            // Fix: Sanitize title and preview to prevent HTML injection issues
+        
             const title = this._sanitizeText(note.title || 'Untitled Note');
             const rawText = this._getTextContent(note.content || '');
             const preview = this._sanitizeText(rawText.substring(0, 60)) + (rawText.length > 60 ? '…' : '');
@@ -1190,7 +1187,6 @@ class NoteNest {
         const range = selection.getRangeAt(0);
         const isCollapsed = range.collapsed;
     
-        // ADD THIS SECTION: Handle unhighlight (remove highlight)
         if (command === 'hiliteColor' && value === 'none') {
             this._removeHighlight();
             return;

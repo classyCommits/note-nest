@@ -20,50 +20,45 @@ chrome.action.onClicked.addListener(async (tab) => {
 // Runs once when the extension is installed or updated.
 chrome.runtime.onInstalled.addListener(async () => {
 
-    try {
-        const result = await chrome.storage.local.get('settings');
-        if (!result.settings) {
-            await chrome.storage.local.set({
-                settings: {
-                    fontSize: '14',
-                    autoSave: true,
-                    confirmDelete: true
-                }
-            });
-      
+  try {
+    const result = await chrome.storage.local.get('settings');
+    if (!result.settings) {
+      await chrome.storage.local.set({
+        settings: {
+          fontSize: '14',
+          autoSave: true,
+          confirmDelete: true
         }
-    } catch (error) {
-        console.error('Error initializing settings:', error);
+      });
+
     }
+  } catch (error) {
+    console.error('Error initializing settings:', error);
+  }
 });
   
 
 // Listens for global keyboard shortcuts defined in manifest.json.
-if (chrome.commands && chrome.commands.onCommand) {
-  chrome.commands.onCommand.addListener(async (command, tab) => {
+chrome.commands.onCommand.addListener(async (command, tab) => {
+  // tab can be undefined if shortcut fired from chrome:// pages or DevTools
+  if (!tab?.windowId) {
+    console.warn('Shortcut fired with no active tab — cannot open side panel.');
+    return;
+  }
 
-    // tab can be undefined if shortcut fired from chrome:// pages or DevTools
-    if (!tab?.windowId) {
-      console.warn('Shortcut fired with no active tab — cannot open side panel.');
-      return;
-    }
+  try {
+    await chrome.sidePanel.open({ windowId: tab.windowId });
 
-    try {
-      await chrome.sidePanel.open({ windowId: tab.windowId });
-
-      // Small delay to ensure the side panel is ready to receive messages.
-      setTimeout(() => {
-        chrome.runtime.sendMessage({ action: command }, () => {
-          if (chrome.runtime.lastError) {
-            console.warn('Could not send shortcut message:', chrome.runtime.lastError.message);
-          }
-        });
-      }, 150);
-    } catch (error) {
-      console.error('Error handling shortcut:', error);
-    }
-  });
-  
-} else {
-  console.warn('chrome.commands API not available');
-}
+    // Small delay to ensure the side panel is ready to receive messages.
+    setTimeout(() => {
+      chrome.runtime.sendMessage({ action: command }, () => {
+        if (chrome.runtime.lastError) {
+          // Keep this specific warn as it helps debug message-passing failures
+          console.warn('Could not send shortcut message:', chrome.runtime.lastError.message);
+        }
+      });
+    }, 150);
+  } catch (error) {
+    console.error('Error handling shortcut:', error);
+  }
+});
