@@ -243,7 +243,6 @@ class NoteNest {
             const command = button.dataset.command;
         
             if (command) this.execCommand(command);
-            // The lines for 'heading' have been completely removed.
         
             this._pulseAnimation(button);
         });
@@ -645,7 +644,7 @@ class NoteNest {
      */
     createNewNote() {
         const note = {
-            id: Date.now().toString(),
+            id: crypto.randomUUID(),
             title: 'Untitled Note',
             content: '',
             folder: 'personal',
@@ -682,7 +681,6 @@ class NoteNest {
         if (tag && !this.currentNote.tags.includes(tag)) {
             this.currentNote.tags.push(tag);
             this._handleNoteUpdate({ tags: this.currentNote.tags });
-            this.renderTags();
             tagInput.value = '';
         }
     }
@@ -698,7 +696,6 @@ class NoteNest {
         if (index !== -1) {
             this.currentNote.tags.splice(index, 1);
             this._handleNoteUpdate({ tags: this.currentNote.tags });
-            this.renderTags();
         }
     }
 
@@ -735,7 +732,7 @@ class NoteNest {
         if (folderName && folderName.trim() !== '') {
             // Create a new note in the folder to ensure the folder exists
             const note = {
-                id: Date.now().toString() + '-folder',
+                id: crypto.randomUUID(),
                 title: 'New Note',
                 content: '',
                 folder: folderName.trim(),
@@ -906,11 +903,6 @@ class NoteNest {
         });
 
         this.dom.notesList.appendChild(fragment);
-        
-        // Fix: Add animation call if the method exists
-        if (typeof this._animateNoteCards === 'function') {
-            this._animateNoteCards();
-        }
     }
 
     /**
@@ -955,12 +947,11 @@ class NoteNest {
             return;
         }
 
-        // --- ADD THIS BLOCK TO FIX HIGHLIGHTING ---
         // Loop through all folder items and set the active state correctly.
         document.querySelectorAll('.folder-item').forEach(item => {
             item.classList.toggle('active', item.dataset.folder === folderName);
         });
-        // -----------------------------------------
+
 
         // Set the folder name in the header
         this.dom.folderNameHeader.textContent = folderName;
@@ -1085,9 +1076,6 @@ class NoteNest {
             folderElement.appendChild(document.createTextNode(folder));
         });
 
-
-        // Update folder select dropdown
-        this.updateFolderSelect();
     }
 
     /**
@@ -1302,7 +1290,7 @@ class NoteNest {
         tempDiv.innerHTML = html;
 
         // Improved URL regex
-        const urlRegex = /(https?:\/\/(?:www\.)?[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,}|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,})/gi;
+        const urlRegex = /(https?:\/\/(?:www\.)?[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.[^\s]{2,})/gi;
 
         // Function to process text nodes
         const processNode = (node) => {
@@ -1561,27 +1549,6 @@ class NoteNest {
         this.dom.editor.focus();
     }
 
-    /**
-     * Sets the global default font size for the editor.
-     * @param {string} size - The new font size in pixels.
-     */
-    _setGlobalFontSize(size) {
-        const newSize = parseInt(size, 10);
-
-        // Validate the new size.
-        if (isNaN(newSize) || newSize < 8 || newSize > 72) {
-            // If invalid, reset the display to the last known good setting.
-            this.dom.fontSizeDisplay.value = this.settings.fontSize;
-            return;
-        }
-
-        // Update settings, apply them to the UI, and save the data.
-        this.settings.fontSize = newSize.toString();
-        this.dom.editor.style.fontSize = `${newSize}px`;
-        this.applySettings();
-        this.saveData();
-    }
-
 
     deleteNote(noteId) {
         this.showConfirmationModal(noteId);
@@ -1614,9 +1581,6 @@ class NoteNest {
         this.noteToDelete = null;
     }
 
-        /**
-     * Fixed performDelete method with correct method names
-     */
     performDelete(noteId) {
         const noteIndex = this.notes.findIndex(note => note.id === noteId);
         if (noteIndex === -1) return;
@@ -1638,9 +1602,8 @@ class NoteNest {
             }
         }
 
-        // Fix: Use correct method names
-        this.saveData();        // ✅ Correct method name
-        this.renderNotesList(); // ✅ Correct method name
+        this.saveData();        // Correct method name
+        this.renderNotesList(); // Correct method name
         
         // Also update folder list in case folder becomes empty
         this.renderFolderList();
