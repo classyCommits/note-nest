@@ -1,13 +1,14 @@
 {
     "manifest_version": 3,
     "name": "NoteNest",
+    "short_name": "NoteNest",
     "version": "1.1",
-    "description": "A feature-rich notepad in the browser side panel.",
+    "description": "A rich-text notepad in your browser side panel. Write notes, organize by folders, add tags, highlight text, and auto-save as you type.",
+    "minimum_chrome_version": "114",
     "permissions": [
       "storage",
       "sidePanel",
-      "tabs"
-      
+      "tabs" 
     ],
     "icons": {
       "16": "assets/icons/icon16.png",
@@ -24,19 +25,19 @@
       "default_path": "sidepanel/sidepanel.html"
     },
     "commands": {
-      "new-note": {
-        "suggested_key": {
-          "default": "Alt+N",
-          "mac": "Alt+N"
+        "new-note": {
+            "suggested_key": {
+                "default": "Alt+N",
+                "mac": "Ctrl+Shift+N"
+            },
+            "description": "Create a new note"
         },
-        "description": "Create a new note"
-      },
-      "focus-search": {
-        "suggested_key": {
-          "default": "Alt+S",
-          "mac": "Alt+S"
-        },
-        "description": "Search notes"
-      }
+        "focus-search": {
+            "suggested_key": {
+                "default": "Alt+S",
+                "mac": "Ctrl+Shift+S"
+            },
+            "description": "Focus search"
+        }
     }
   }
