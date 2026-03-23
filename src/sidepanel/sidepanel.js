@@ -1018,8 +1018,9 @@ class NoteNest {
             noteElement.className = 'note-card p-4 rounded-lg cursor-pointer';
             noteElement.dataset.noteId = note.id;
 
-            const title = note.title || 'Untitled Note';
-            const preview = this._getTextContent(note.content).substring(0, 100) + (note.content.length > 100 ? '...' : '');
+            const title   = this._sanitizeText(note.title || 'Untitled Note');
+            const rawText = this._getTextContent(note.content || '');
+            const preview = this._sanitizeText(rawText.substring(0, 100) + (rawText.length > 100 ? '…' : ''));
             const d = new Date(note.lastModified);
             const day = String(d.getDate()).padStart(2, '0');
             const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
@@ -1094,9 +1095,9 @@ class NoteNest {
                 <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
                 </svg>
-                ${folder}
             `;
-            foldersList.appendChild(folderElement);
+            // Append folder name as a safe text node — never as HTML
+            folderElement.appendChild(document.createTextNode(folder));
         });
 
 
