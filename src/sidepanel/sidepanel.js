@@ -1,8 +1,8 @@
 /**
  * @file sidepanel.js
  * @description Main logic for the NoteNest Chrome Extension sidepanel.
- * @version 1.0
- * @date 2025-08-09
+ * @version 1.1
+ * @date 2026-03-23
  */
 
 class NoteNest {
