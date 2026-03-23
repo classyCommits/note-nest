@@ -1,13 +1,36 @@
 # Dependencies
-/node_modules
+node_modules/
 
 # Build output
-/dist
+dist/
 
 # Environment variables
 .env
 .env.local
+.env.*.local
 
 # OS-specific files
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Editor & IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# npm / build logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Tailwind / PostCSS cache
+.cache/
+
+# Chrome extension packaging artifacts
+*.pem
+*.crx
+*.zip
