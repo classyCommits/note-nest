@@ -14,7 +14,7 @@
 <body class="h-full">
     <div id="app" class="h-full flex flex-col panel-enter">
         <header class="flex items-center justify-center p-4 border-b border-color relative">
-            <button id="toggleSidebarBtn" aria-label="Toggle Sidebar"
+            <button type="button" id="toggleSidebarBtn" aria-label="Toggle Sidebar"
                 class="absolute left-4 p-2 rounded-md hover:bg-indigo-100">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -47,9 +47,9 @@
                         aria-label="Search notes" role="searchbox">
                 </div>
 
-            <button id="newNoteBtn"
+            <button type="button" id="newNoteBtn"
                 class="btn-primary w-full py-2 px-4 rounded-lg text-sm font-medium mb-4 flex items-center justify-center space-x-2"
-                aria-label="Create new note" role="button">
+                aria-label="Create new note" >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -59,7 +59,7 @@
             <div class="mb-4">
                 <div class="flex items-center justify-between mb-2">
                     <h3 class="text-xs font-semibold uppercase tracking-wider text-secondary">Folders</h3>
-                    <button id="addFolderBtn"
+                    <button type="button" id="addFolderBtn"
                         class="add-folder-btn flex items-center justify-center rounded-full w-6 h-6 text-xs"
                         title="Add folder">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,7 +102,7 @@
                     <div class="p-4 border-b border-color flex-shrink-0">
                         <div class="flex items-center justify-between mb-4">
                             <h2 id="folderNameHeader" class="text-xl font-semibold">Folder Name</h2>
-                            <button id="backToEditorBtn" class="folder-window-btn">
+                            <button type="button" id="backToEditorBtn" class="folder-window-btn">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -145,7 +145,7 @@
                                 <option value="72">72</option>
                             </select>
                         </div>
-                        <button class="toolbar-btn" id="fontColorBtn" title="Text Color">
+                        <button type="button" class="toolbar-btn" id="fontColorBtn" title="Text Color">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -155,7 +155,7 @@
                         <input type="color" id="fontColorPicker" class="hidden" aria-label="Select text color">
 
                         <div class="relative">
-                            <button class="toolbar-btn" id="highlightColorBtn" title="Highlight Color">
+                            <button type="button" class="toolbar-btn" id="highlightColorBtn" title="Highlight Color">
                                 <svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -184,13 +184,13 @@
                         </div>
 
 
-                        <button class="toolbar-btn" data-command="bold" title="Bold (Ctrl+B)">
+                        <button type="button" class="toolbar-btn" data-command="bold" title="Bold (Ctrl+B)">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8.25 5.25h4.5a3.75 3.75 0 013.75 3.75v.038a3.75 3.75 0 01-3.75 3.75H8.25v-7.5zm0 7.5h5.25a3.75 3.75 0 013.75 3.75v.038a3.75 3.75 0 01-3.75 3.75H8.25v-7.5z" />
                             </svg>
                         </button>
-                        <button class="toolbar-btn" data-command="italic" title="Italic (Ctrl+I)">
+                        <button type="button" class="toolbar-btn" data-command="italic" title="Italic (Ctrl+I)">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <!-- Modern "I" design with top line, bottom line, and slanting middle line -->
                                 <path d="M6 6H18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -198,7 +198,7 @@
                                 <path d="M10 8L14 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             </svg>
                         </button>
-                        <button class="toolbar-btn" data-command="underline" title="Underline (Ctrl+U)">
+                        <button type="button" class="toolbar-btn" data-command="underline" title="Underline (Ctrl+U)">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M5.25 18.75h13.5M6.75 4.5v7.5a5.25 5.25 0 0010.5 0V4.5" />
@@ -206,7 +206,7 @@
                         </button>
 
                        
-                        <button class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+                        <button type="button" class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                                     d="M8.25 6.75h12M8.25 12h12M8.25 17.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 17.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
@@ -241,7 +241,7 @@
                             <div class="flex items-center space-x-1">
                                 <input type="text" id="tagInput" class="text-xs px-2 py-1 rounded border"
                                     placeholder="Add tag">
-                                <button id="addTagBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+                                <button type="button" id="addTagBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
                                     title="Add tag">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -249,7 +249,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <button id="favoriteBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+                            <button type="button" id="favoriteBtn" class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
                                 title="Star this note">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -276,8 +276,8 @@
                     <label for="doNotAskAgain">Don't ask again</label>
                 </div>
                 <div class="flex justify-end space-x-3">
-                    <button id="cancelDeleteBtn" class="px-4 py-2 rounded border border-gray-300">Cancel</button>
-                    <button id="confirmDeleteBtn" class="px-4 py-2 rounded bg-red-500 text-white">Delete</button>
+                    <button type="button" id="cancelDeleteBtn" class="px-4 py-2 rounded border border-gray-300">Cancel</button>
+                    <button type="button" id="confirmDeleteBtn" class="px-4 py-2 rounded bg-red-500 text-white">Delete</button>
                 </div>
             </div>
         </div>
