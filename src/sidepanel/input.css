@@ -1,3 +1,7 @@
+:root {
+    --color-accent-dark: #4f46e5; /* Indigo-600 — matches icon-primary color */
+}
+
 @font-face {
     font-family: 'Manrope';
     src: url('../assets/fonts/Manrope-Regular.woff2') format('woff2');
@@ -53,6 +57,15 @@
 .context-menu {
     min-width: 120px;
 }
+
+.context-menu-item {
+    user-select: none;
+}
+
+.color-option {
+    flex-shrink: 0;
+}
+
 .add-folder-btn {
   background-color: #f3f4f6; /* Using Tailwind's gray-100 */
   color: #4b5563; /* Using Tailwind's gray-600 */
@@ -282,6 +295,4 @@ html, body {
   overflow:hidden;     /* This will show a horizontal scrollbar only if needed */
 }
 
-:root {
-    --color-accent-dark: #4f46e5; /* Indigo-600 — matches icon-primary color */
-}
+
