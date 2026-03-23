@@ -279,3 +279,6 @@ html, body {
   overflow:hidden;     /* This will show a horizontal scrollbar only if needed */
 }
 
+:root {
+    --color-accent-dark: #4f46e5; /* Indigo-600 — matches icon-primary color */
+}
