@@ -3,7 +3,7 @@
     "name": "NoteNest",
     "short_name": "NoteNest",
     "version": "1.1",
-    "description": "A rich-text notepad in your browser side panel. Write notes, organize by folders, add tags, highlight text, and auto-save as you type.",
+    "description": "A rich notepad in your browser side panel. Write notes, organize by folders, add tags, highlight text, and auto-save as you type.",
     "minimum_chrome_version": "114",
     "permissions": [
       "storage",
